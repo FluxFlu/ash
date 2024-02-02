@@ -15,5 +15,6 @@ int main(int argc, char** argv) {
     }
     char* input = getInput(fptr);
     puts(input);
+    tokenize(input);
     return 0;
 }
