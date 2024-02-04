@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 FILE* handleInputFilename(int argc, char** argv) {
     if (argc > 1) {
@@ -25,12 +27,9 @@ FILE* handleInputFilename(int argc, char** argv) {
         } else if (!(stats.st_mode & R_OK)) {
             fprintf(stderr, "ash: Unknown command. '%s' exists but does not have read permissions.\n", argv[1]);
             return (FILE*) 1;
-        } else if (!(stats.st_mode & X_OK)) {
-            fprintf(stderr, "ash: Unknown command. '%s' exists but does not have execute permissions.\n", argv[1]);
-            return (FILE*) 1;
         }
         return fopen(argv[1], "rx");
     } else {
-        return stdin;
+        return (FILE*) 2;
     }
 }

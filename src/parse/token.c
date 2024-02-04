@@ -1,5 +1,8 @@
 
 typedef enum type {
+    NULLTYPE,
+    
+    SEPARATOR,
     IDENTIFIER,
     OPERATOR,
     STRING,
