@@ -9,7 +9,6 @@
 #include "./repl/shell_state.c"
 #include "./repl/raw_mode.c"
 #include "./repl/write.c"
-#include "./repl/prompt.c"
 
 #include "./parse/token.c"
 #include "./parse/tokenize.c"
@@ -27,9 +26,12 @@ int main(int argc, char** argv) {
     }
 
     if (fptr == (FILE*) 2) {
+        print = printInteractive;
         handleInteractive();
+    } else {
+        print = printNonInteractive;
+        handleFile(fptr);
     }
 
-    handleFile(fptr);
     return 0;
 }

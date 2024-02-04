@@ -1,7 +1,9 @@
 #include <string.h>
 #include <stdio.h>
 
-void print(char* str, size_t size) {
+void (*print)(char* str, size_t size);
+
+void printInteractive(char* str, size_t size) {
     char* new = (char*) realloc(state.writeBuf, state.writeBufLen + size);
     
     if (new == NULL) return;
@@ -9,6 +11,12 @@ void print(char* str, size_t size) {
     memcpy(&new[state.writeBufLen], str, size);
     state.writeBuf = new;
     state.writeBufLen += size;
+}
+
+void printNonInteractive(char* str, size_t size) {
+    for (size_t i = 0; i < size; i++) {
+        putchar(str[i]);
+    }
 }
 
 void printLit(char* str) {
@@ -20,6 +28,18 @@ void drawRaw() {
     state.writeBufLen = 0;
 }
 
+
+void prompt() {
+    printLit(state.username);
+    printLit("@");
+    printLit(state.hostname);
+    printLit(" ");
+    
+    printLit(state.cwd);
+
+    printLit("> ");
+}
+
 void draw(char* str, size_t length) {
     // Update the cursor position
     size_t caretLen = strlen(state.hostname) + strlen(state.username) + strlen("@ _ > ");
@@ -27,10 +47,12 @@ void draw(char* str, size_t length) {
     printLit("\x1b[0G");
     printLit("\x1b[K");
 
-    printLit(state.username);
-    printLit("@");
-    printLit(state.hostname);
-    printLit(" _ > ");
+    prompt();
+
+    // printLit(state.username);
+    // printLit("@");
+    // printLit(state.hostname);
+    // printLit(" _ > ");
     print(str, length);
 
     if (length > state.pos) {

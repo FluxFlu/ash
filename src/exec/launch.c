@@ -10,7 +10,7 @@ int launch (char* file, char** argv) {
         // Child process
         disableRawMode();
         if (execvp(file, argv) == -1) {
-            fprintf(stderr, "ash: ERROR WITH EXEC: %s\r\n", file);
+            fprintf(stderr, "\rash: Unable to exec [%s]\r\n", file);
             perror("ash");
         }
         exit(EXIT_FAILURE);

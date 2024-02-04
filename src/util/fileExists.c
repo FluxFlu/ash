@@ -3,10 +3,8 @@
 #include <errno.h>
 #include <stdbool.h>
 
-
-int fileExists(char* filename) {
-    struct stat stats;
-    if (stat(filename, &stats) != 0) {
+int fileExists(char* filename, struct stat* stats) {
+    if (stat(filename, stats) != 0) {
         switch (errno) {
             case ENOTDIR:
             case ENOENT:

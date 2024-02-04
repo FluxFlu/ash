@@ -3,6 +3,7 @@
 struct editorState {
     char* hostname;
     char* username;
+    char* cwd;
 
     int pos;
     char* line;

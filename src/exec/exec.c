@@ -8,13 +8,19 @@
 void exec(Token* tokens) {
     Token command = tokens[0];
 
+    if (isNull(command)) {
+        return;
+    }
+
     size_t i = 0;
-    while (builtin_str[i] != NULL) {
-        if (strcmp(builtin_str[i], command.value) == 0) {
-            builtin_fn[i](tokens + 1);
-            return;
+    if (command.value[0] != '.' && command.value[0] != '/' && command.value[0] != '~') {
+        while (builtin_str[i] != NULL) {
+            if (strcmp(builtin_str[i], command.value) == 0) {
+                builtin_fn[i](tokens + 1);
+                return;
+            }
+            i++;
         }
-        i++;
     }
 
     char** argv = (char**) malloc(ptrSize * 64);

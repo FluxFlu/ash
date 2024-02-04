@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdlib.h>
+#include <limits.h>
 
 Token* tokenize(String fileString) {
     char* file = fileString.data;
@@ -63,17 +64,42 @@ Token* tokenize(String fileString) {
                 tokens = (Token*) realloc(tokens, tokenArraySize);
             }
         } else if (!isspace(file[i])) {
-            size_t j = 0;
-            while (i + j < fileString.length && !isspace(file[i + j])) {
-                str[j] = file[i + j];
-                j++;
+            size_t s = 0;
+            size_t f = 0;
+
+            while (i + f < fileString.length && !isspace(file[i + f])) {
+
+                if (file[i + f] == '~' && isspace(file[i + f - 1]) && (file[i + f + 1] == '/' || isspace(file[i + f + 1]) || i + f + 1 >= fileString.length)) {
+                    if (state.username == NULL) {
+                        char* username = (char*) malloc(LOGIN_NAME_MAX);
+                        getlogin_r(username, LOGIN_NAME_MAX);
+                        state.username = username;
+                    }
+                    int len = strlen(state.username) + 6;
+
+                    int n = 0;
+                    while (n < len) {
+                        if (n <= 5) {
+                            str[s + n] = "/home/"[n];
+                        } else {
+                            str[s + n] = state.username[n - 6];
+                        }
+                        n++;
+                    }
+                    s += len;
+                    f++;
+                    continue;
+                }
+                str[s] = file[i + f];
+                s++;
+                f++;
             }
 
-            i += j - 1;
+            i += f - 1;
 
-            char* strCpy = malloc(charSize * (j + 1));
-            strCpy[j] = 0;
-            for (size_t f = 0; f < j; f++) {
+            char* strCpy = malloc(charSize * (s + 1));
+            strCpy[s] = 0;
+            for (f = 0; f < s; f++) {
                 strCpy[f] = str[f];
             }
 

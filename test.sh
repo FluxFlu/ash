@@ -1,3 +1,3 @@
 help
 
-echo other "Hello, \"☃Π world!"
+echo o~ther "Hello, \"☃Π world!"
