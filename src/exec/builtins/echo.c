@@ -10,6 +10,7 @@ int ash_echo (Token* tokens) {
         printLit(tokens[i].value);
         printLit(" ");
     }
+    
     printLit("\r\n");
     return 0;
 }

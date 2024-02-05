@@ -30,12 +30,26 @@ void drawRaw() {
 
 
 void prompt() {
-    printLit(state.username);
-    printLit("@");
+    if (state.color) {
+        printLit("\e[34m");
+        printLit(state.username);
+        printLit("\e[30m");
+        printLit("@");
+        printLit("\e[0m");
+    } else {
+        printLit(state.username);
+        printLit("@");
+    }
     printLit(state.hostname);
     printLit(" ");
-    
-    printLit(state.cwd);
+
+    if (state.color) {
+        printLit("\e[34m");
+        printLit(state.cwd);
+        printLit("\e[0m");
+    } else {
+        printLit(state.cwd);
+    }
 
     printLit("> ");
 }

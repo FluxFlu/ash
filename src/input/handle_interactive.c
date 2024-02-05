@@ -11,13 +11,24 @@ void handleInteractive() {
 
     state.hostname = hostname;
     state.username = username;
+
+    state.color = true;
+
+    char* no_color = getenv("NO_COLOR");
+	if (!isatty(STDIN_FILENO) || (no_color != NULL && no_color[0] != '\0')) {
+		state.color = false;
+    }
     
     state.pos = 0;
 
     enableRawMode();
 
-    printLit("Welcome to Ashley's Shell\r\n");
-    printLit("Type `help` for usage information\r\n");
+    printLit("Welcome to Ashley's Shell\r\n\n");
+    if (state.color) {
+        printLit("Type \e[34mhelp\e[0m for a list of commands\r\n\n");
+    } else {
+        printLit("Type `help` for a list of commands\r\n");
+    }
 
     char cwd[PATH_MAX];
     char displayCwd[128];
