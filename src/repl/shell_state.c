@@ -1,10 +1,20 @@
 #include <termios.h>
 #include <stdbool.h>
 
+typedef struct line {
+    char* str;
+    size_t strTop;
+    size_t length;
+} Line;
+
 struct editorState {
     char* hostname;
     char* username;
     char* cwd;
+
+    Line* history;
+    unsigned char historyIndex;
+    unsigned char historySize;
 
     bool color;
 

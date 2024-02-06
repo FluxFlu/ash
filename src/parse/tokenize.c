@@ -1,6 +1,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 
 Token* tokenize(String fileString) {
     char* file = fileString.data;

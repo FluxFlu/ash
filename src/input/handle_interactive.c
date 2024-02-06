@@ -9,6 +9,12 @@ void handleInteractive() {
     gethostname(hostname, HOST_NAME_MAX);
     getlogin_r(username, LOGIN_NAME_MAX);
 
+
+    Line history[128];
+    state.history = history;
+    state.historyIndex = 0;
+    state.historySize = 0;
+
     state.hostname = hostname;
     state.username = username;
 
@@ -80,7 +86,7 @@ void handleInteractive() {
 
         String input = getInteractiveInput();
         Token* tokens = tokenize(input);
-        free(input.data);
+        // free(input.data);
 
         if (tokens[0].type == NULLTYPE) {
             continue;

@@ -6,11 +6,12 @@
 #include "./util/def.c"
 #include "./util/string.c"
 
+#include "./parse/token.c"
+
 #include "./repl/shell_state.c"
 #include "./repl/raw_mode.c"
 #include "./repl/write.c"
 
-#include "./parse/token.c"
 #include "./parse/tokenize.c"
 
 #include "./exec/exec.c"

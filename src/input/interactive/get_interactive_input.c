@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "./utils/history_shift_up.c"
+
 #include "./inputs/input_char.c"
 #include "./inputs/backspace.c"
+#include "./inputs/up.c"
+#include "./inputs/down.c"
 
 String getInteractiveInput() {
     size_t length = 16;
@@ -15,6 +19,10 @@ String getInteractiveInput() {
             return (String){ strTop, str };
         }
         if (c == 13) {
+            state.historyIndex = 0;
+            historyShiftUp();
+            state.history[0] = (Line){ str, strTop, length };
+
             print("\r\n", 2);
             state.pos = 0;
             drawRaw();
@@ -35,17 +43,21 @@ String getInteractiveInput() {
                     switch (ctrl) {
                         case 'A':
                         case 'a':
+                            str = up(&length, &strTop, str);
                             break;
                         case 'B':
                         case 'b':
+                            str = down(&length, &strTop, str);
                             break;
                         case 'C':
                         case 'c':
+                            // Right
                             if (state.pos < strTop)
                                 state.pos++;
                             break;
                         case 'D':
                         case 'd':
+                            // Left
                             if (state.pos)
                                 state.pos--;
                             break;

@@ -15,7 +15,7 @@ int launch (char* file, char** argv) {
         }
         exit(EXIT_FAILURE);
     } else if (pid < 0) {
-        perror("ash: ERROR FORKING");
+        perror("ash: Error forking");
     } else {
         // Parent process
         do {
