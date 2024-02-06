@@ -30,12 +30,8 @@ String getInteractiveInput() {
         }
         if (iscntrl(c)) {
             char ctrl;
-            // printf("%c%c\r\n", buf[0], buf[1]);
             if (c == 127) {
-                // printf("TEST");
-                // printf("[%d]", strTop);
                 str = backspace(&length, &strTop, str);
-                // printf("[%d]", strTop);
             } else if (c == 27) {
                 read(STDIN_FILENO, &ctrl, 1);
                 if (ctrl == '[') {
@@ -61,6 +57,16 @@ String getInteractiveInput() {
                             if (state.pos)
                                 state.pos--;
                             break;
+                        case 'H':
+                        case 'h':
+                            // Home
+                            state.pos = 0;
+                            break;
+                        case 'F':
+                        case 'f':
+                            // End
+                            state.pos = strTop;
+                            break;
                         default:
                             str = inputChar(&length, &strTop, str, '[');
                             str = inputChar(&length, &strTop, str, ctrl);
@@ -71,13 +77,7 @@ String getInteractiveInput() {
             continue;
         }
 
-        // printf("%d ('%c')\r\n", c, c);
-
-        // if (c == 127) {
-            // printf("%d ('%c')\r\n", c, c);
-        // } else {
-            str = inputChar(&length, &strTop, str, c);
-        // }
+        str = inputChar(&length, &strTop, str, c);
         
         draw(str, strTop);
     }
