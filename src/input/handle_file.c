@@ -6,6 +6,8 @@ void handleFile(FILE* fptr) {
     Token* tokens = tokenize(input);
     free(input.data);
 
+    state.isInteractive = false;
+
     if (tokens[0].type == NULLTYPE) {
         return;
     }

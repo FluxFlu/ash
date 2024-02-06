@@ -25,5 +25,5 @@ int launch (char* file, char** argv) {
 
     enableRawMode();
 
-    return 1;
+    return WEXITSTATUS(status);
 }

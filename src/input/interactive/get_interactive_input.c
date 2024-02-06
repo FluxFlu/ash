@@ -4,9 +4,10 @@
 #include "./utils/history_shift_up.c"
 
 #include "./inputs/input_char.c"
-#include "./inputs/backspace.c"
+#include "./inputs/delete.c"
 #include "./inputs/up.c"
 #include "./inputs/down.c"
+#include "./inputs/delete_previous_word.c"
 
 String getInteractiveInput() {
     size_t length = 16;
@@ -31,7 +32,10 @@ String getInteractiveInput() {
         if (iscntrl(c)) {
             char ctrl;
             if (c == 127) {
-                str = backspace(&length, &strTop, str);
+                if (state.pos) {
+                    state.pos--;
+                    str = delete(&length, &strTop, str);
+                }
             } else if (c == 27) {
                 read(STDIN_FILENO, &ctrl, 1);
                 if (ctrl == '[') {
@@ -67,11 +71,22 @@ String getInteractiveInput() {
                             // End
                             state.pos = strTop;
                             break;
+                        case '3':
+                            read(STDIN_FILENO, &ctrl, 1);
+                            if (ctrl == '~') {
+                                if (state.pos != strTop) {
+                                    str = delete(&length, &strTop, str);
+                                }
+                            }
+                            break;
                         default:
                             str = inputChar(&length, &strTop, str, '[');
                             str = inputChar(&length, &strTop, str, ctrl);
                     }
                 }
+            } else if (c == ('w' & 0x1f) || c == 8) {
+                // Ctrl+w, Ctrl+Backspace
+                str = deletePreviousWord(&length, &strTop, str);
             }
             draw(str, strTop);
             continue;

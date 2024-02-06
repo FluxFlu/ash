@@ -43,6 +43,18 @@ void prompt() {
     printLit(state.hostname);
     printLit(" ");
 
+    if (state.lastResult != 0) {
+        if (state.color) {
+            printLit("\e[31m[");
+            print(state.lastResultBuf, 3);
+            printLit("] \e[0m");
+        } else {
+            print("[", 1);
+            print(state.lastResultBuf, 3);
+            print("] ", 2);
+        }
+    }
+
     if (state.color) {
         printLit("\e[34m");
         printLit(state.cwd);

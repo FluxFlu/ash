@@ -46,6 +46,10 @@ void exec(Token* tokens) {
         int err = fileExists(glob, &stats);
         if (err) {
             printFileErr(err, command.value);
+            state.lastResult = 127;
+            state.lastResultBuf[0] = '1';
+            state.lastResultBuf[1] = '2';
+            state.lastResultBuf[2] = '7';
             return;
         } else if (!(stats.st_mode & X_OK)) {
             fprintf(stderr, "ash: Unknown command. '%s' exists but does not have execute permissions.\n", command.value);
@@ -55,6 +59,10 @@ void exec(Token* tokens) {
         int err = fileExists(command.value, &stats);
         if (err) {
             printFileErr(err, command.value);
+            state.lastResult = 127;
+            state.lastResultBuf[0] = '1';
+            state.lastResultBuf[1] = '2';
+            state.lastResultBuf[2] = '7';
             return;
         } else if (!(stats.st_mode & X_OK)) {
             fprintf(stderr, "ash: Unknown command. '%s' exists but does not have execute permissions.\n", command.value);
@@ -62,5 +70,22 @@ void exec(Token* tokens) {
         }
     }
 
-    launch(command.value, argv);
+    int result = launch(command.value, argv);
+    if (state.isInteractive) {
+        state.lastResult = result;
+        state.lastResultBuf[2] = result % 10 + 48;
+        result /= 10;
+        if (result) {
+            state.lastResultBuf[1] = result % 10 + 48;
+            result /= 10;
+            if (result) {
+                state.lastResultBuf[0] = result % 10 + 48;
+            } else {
+                state.lastResultBuf[0] = 0;
+            }
+        } else {
+            state.lastResultBuf[1] = 0;
+            state.lastResultBuf[0] = 0;
+        }
+    }
 }

@@ -16,6 +16,11 @@ struct editorState {
     unsigned char historyIndex;
     unsigned char historySize;
 
+    bool isInteractive;
+
+    int lastResult;
+    char lastResultBuf[3];
+
     bool color;
 
     int pos;

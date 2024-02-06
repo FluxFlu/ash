@@ -15,6 +15,8 @@ void handleInteractive() {
     state.historyIndex = 0;
     state.historySize = 0;
 
+    state.isInteractive = true;
+
     state.hostname = hostname;
     state.username = username;
 
