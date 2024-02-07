@@ -32,6 +32,7 @@ void handleInteractive() {
     enableRawMode();
 
     printLit("Welcome to Ashley's Shell\r\n\n");
+    
     if (state.color) {
         printLit("Type \e[34mhelp\e[0m for a list of commands\r\n\n");
     } else {
@@ -40,6 +41,8 @@ void handleInteractive() {
 
     char cwd[PATH_MAX];
     char displayCwd[128];
+
+    disableSigint();
 
     for (;;) {
 
@@ -76,7 +79,7 @@ void handleInteractive() {
                 break;
             }
             if (f >= 128) {
-                perror("COMPILER_ERROR[CWD_TOO_LONG]: CWD IS TOO LONG");
+                perror("AshInternalError[cwd_too_long]: CWD is too long");
             }
         }
         displayCwd[f] = 0;
@@ -91,6 +94,7 @@ void handleInteractive() {
         // free(input.data);
 
         if (tokens[0].type == NULLTYPE) {
+            free(tokens);
             continue;
         }
 

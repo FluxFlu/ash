@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdio.h>
+#include <dirent.h> 
 
 Token* tokenize(String fileString) {
     char* file = fileString.data;
@@ -12,8 +13,7 @@ Token* tokenize(String fileString) {
     size_t tokenIndex = 0;
     size_t tokenArraySize = tokenSize * 64;
 
-    size_t i = 0;
-    for (; i < fileString.length; i++) {
+    for (size_t i = 0; i < fileString.length; i++) {
         if (file[i] == '"' || file[i] == '\'') {
             char toEnd = file[i];
 
@@ -27,7 +27,7 @@ Token* tokenize(String fileString) {
                     continue;
                 }
                 if (i + j >= fileString.length) {
-                    fprintf(stderr, "ash: Unexpected end of file. Quotes are not balanced...");
+                    fprintf(stderr, "ash error: Unexpected end of file. Quotes are not balanced...");
                     exit(1);
                 }
                 if (file[i + j] == toEnd) {
@@ -69,7 +69,6 @@ Token* tokenize(String fileString) {
             size_t f = 0;
 
             while (i + f < fileString.length && !isspace(file[i + f])) {
-
                 if (file[i + f] == '~' && isspace(file[i + f - 1]) && (file[i + f + 1] == '/' || isspace(file[i + f + 1]) || i + f + 1 >= fileString.length)) {
                     if (state.username == NULL) {
                         char* username = (char*) malloc(LOGIN_NAME_MAX);
@@ -77,6 +76,12 @@ Token* tokenize(String fileString) {
                         state.username = username;
                     }
                     int len = strlen(state.username) + 6;
+
+
+                    if ((s + len) * charSize >= strLen) {
+                        strLen *= 2;
+                        str = (char*) realloc(str, strLen);
+                    }
 
                     int n = 0;
                     while (n < len) {
@@ -94,9 +99,37 @@ Token* tokenize(String fileString) {
                 str[s] = file[i + f];
                 s++;
                 f++;
+                if (s * charSize >= strLen) {
+                    strLen *= 2;
+                    str = (char*) realloc(str, strLen);
+                }
             }
+            str[s] = 0;
 
             i += f - 1;
+
+            bool hasWildCard = false;
+
+            // for (f = 0; str[s])
+            // if (file[i + f] == '*') {
+            //         DIR* cwd;ISIG
+            //         if (s == 0) {
+            //             char cwdBuf[PATH_MAX];
+            //             getcwd(cwdBuf, PATH_MAX);
+            //             cwd = opendir(cwdBuf);
+            //         } else {
+            //             cwd = opendir(str);
+            //         }
+            //         struct dirent *dirEntry;
+
+            //         if (cwd == NULL) {
+            //             printf("ash error: Could not open current directory.");
+            //             exit(1);
+            //         }
+
+            //         size_t top  = 0;
+            //         size_t size = 0;
+            // }
 
             char* strCpy = malloc(charSize * (s + 1));
             strCpy[s] = 0;

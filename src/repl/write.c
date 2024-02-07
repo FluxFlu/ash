@@ -25,6 +25,11 @@ void printLit(char* str) {
 
 void drawRaw() {
     write(STDOUT_FILENO, state.writeBuf, state.writeBufLen);
+    if (state.writeBufLen) {
+        state.lastCharWritten = state.writeBuf[state.writeBufLen - 1];
+    } else {
+        state.lastCharWritten = 0;
+    }
     state.writeBufLen = 0;
 }
 
@@ -46,11 +51,11 @@ void prompt() {
     if (state.lastResult != 0) {
         if (state.color) {
             printLit("\e[31m[");
-            print(state.lastResultBuf, 3);
+            print(state.lastResultBuf, 7);
             printLit("] \e[0m");
         } else {
             print("[", 1);
-            print(state.lastResultBuf, 3);
+            print(state.lastResultBuf, 7);
             print("] ", 2);
         }
     }
@@ -88,6 +93,11 @@ void draw(char* str, size_t length) {
     }
 
     write(STDOUT_FILENO, state.writeBuf, state.writeBufLen);
+    if (state.writeBufLen) {
+        state.lastCharWritten = state.writeBuf[state.writeBufLen - 1];
+    } else {
+        state.lastCharWritten = 0;
+    }
     state.writeBufLen = 0;
     // printLit("\x1b[0G");
 }

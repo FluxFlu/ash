@@ -2,7 +2,7 @@
 
 #define isNull(token) (token.type == SEPARATOR || token.type == NULLTYPE)
 
-#include "../../util/fileExists.c"
+#include "../../util/file_exists.c"
 
 #include "./help.c"
 #include "./echo.c"

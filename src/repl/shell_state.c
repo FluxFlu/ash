@@ -19,7 +19,7 @@ struct editorState {
     bool isInteractive;
 
     int lastResult;
-    char lastResultBuf[3];
+    char lastResultBuf[7];
 
     bool color;
 
@@ -28,6 +28,7 @@ struct editorState {
 
     char* writeBuf;
     size_t writeBufLen;
+    char lastCharWritten;
 
     struct termios orig_termios;
 };

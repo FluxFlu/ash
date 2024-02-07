@@ -72,13 +72,14 @@ String getInteractiveInput() {
                             state.pos = strTop;
                             break;
                         case '3':
+                            // Delete
                             read(STDIN_FILENO, &ctrl, 1);
                             if (ctrl == '~') {
                                 if (state.pos != strTop) {
                                     str = delete(&length, &strTop, str);
                                 }
+                                break;
                             }
-                            break;
                         default:
                             str = inputChar(&length, &strTop, str, '[');
                             str = inputChar(&length, &strTop, str, ctrl);
