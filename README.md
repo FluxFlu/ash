@@ -10,7 +10,7 @@ Ash is a shell designed for the Linux kernel written entirely in C.
 Ash is currently in an early state of development, so it is missing many features, but the following are currently implemented:
 
 - Advanced line editing (<kbd>HOME</kbd>, <kbd>END</kbd>, <kbd>Ctrl+Backspace</kbd>, etc)
-- Script executioncd
+- Script execution
 - Session-based history
 - Respects [NO_COLOR](https://no-color.org/)
 
