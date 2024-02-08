@@ -24,7 +24,7 @@ String getInteractiveInput() {
             historyShiftUp();
             state.history[0] = (Line){ str, strTop, length };
 
-            print("\r\n", 2);
+            printLit("\r\n");
             state.pos = 0;
             drawRaw();
             return (String){ strTop, str };

@@ -80,10 +80,6 @@ void draw(char* str, size_t length) {
 
     prompt();
 
-    // printLit(state.username);
-    // printLit("@");
-    // printLit(state.hostname);
-    // printLit(" _ > ");
     print(str, length);
 
     if (length > state.pos) {
@@ -99,5 +95,4 @@ void draw(char* str, size_t length) {
         state.lastCharWritten = 0;
     }
     state.writeBufLen = 0;
-    // printLit("\x1b[0G");
 }

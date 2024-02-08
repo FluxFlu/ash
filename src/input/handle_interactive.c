@@ -91,7 +91,6 @@ void handleInteractive() {
 
         String input = getInteractiveInput();
         Token* tokens = tokenize(input);
-        // free(input.data);
 
         if (tokens[0].type == NULLTYPE) {
             free(tokens);

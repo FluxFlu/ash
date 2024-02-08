@@ -104,7 +104,7 @@ Token* tokenize(String fileString) {
                     s += len;
                     f++;
                     continue;
-                } else if (file[i + f] == '#' || file[i + f] == '\\') {
+                } else if (file[i + f] == '#' || i + f + 1 < fileString.length && file[i + f] == '\\' && file[i + f + 1] == '\n') {
                     break;
                 }
                 str[s] = file[i + f];
@@ -118,29 +118,6 @@ Token* tokenize(String fileString) {
             str[s] = 0;
 
             i += f - 1;
-
-            bool hasWildCard = false;
-
-            // for (f = 0; str[s])
-            // if (file[i + f] == '*') {
-            //         DIR* cwd;ISIG
-            //         if (s == 0) {
-            //             char cwdBuf[PATH_MAX];
-            //             getcwd(cwdBuf, PATH_MAX);
-            //             cwd = opendir(cwdBuf);
-            //         } else {
-            //             cwd = opendir(str);
-            //         }
-            //         struct dirent *dirEntry;
-
-            //         if (cwd == NULL) {
-            //             printf("ash error: Could not open current directory.");
-            //             exit(1);
-            //         }
-
-            //         size_t top  = 0;
-            //         size_t size = 0;
-            // }
 
             char* strCpy = malloc(charSize * (s + 1));
             strCpy[s] = 0;

@@ -83,10 +83,6 @@ void exec(Token* tokens) {
         lastChar = state.lastCharWritten;
     }
 
-    // if (lastChar != '\n' && lastChar != '\r') {
-    //     printLit("\r\n");
-    // }
-
     if (wasSigint) {
         state.lastResult = 2;
         setLastResult("SIGINT", 6);
@@ -101,7 +97,6 @@ void exec(Token* tokens) {
                 return;
             }
         
-            // printf("|%i /= %i|", sig, SIGINT);
             printSignal(sig);
             drawRaw();
             exit(1);

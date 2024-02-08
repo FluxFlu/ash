@@ -33,20 +33,6 @@ int launch (char* file, char** argv) {
 
         do {
             wpid = waitpid(childPid, &childStatus, WUNTRACED);
-            // if (shouldKillProcess) {
-            // int childStatus;
-            // waitpid(childPid, &childStatus, WNOHANG);
-                // kill(childPid, SIGKILL);
-            //     kill(childPid, SIGKILL);
-            //     if (sig != 0) {
-            //         printf("Error: Unable to kill child.");
-            //         exit(1);
-            //     }
-            //     if (WIFEXITED(childStatus) || WIFSIGNALED(childStatus)) {
-            //         break;
-            //     }
-            // waitpid(childPid, &child
-            // }
         } while (!WIFEXITED(childStatus) && !WIFSIGNALED(childStatus));
     }
 
