@@ -83,9 +83,9 @@ void exec(Token* tokens) {
         lastChar = state.lastCharWritten;
     }
 
-    if (lastChar != '\n' && lastChar != '\r') {
-        printLit("\r\n");
-    }
+    // if (lastChar != '\n' && lastChar != '\r') {
+    //     printLit("\r\n");
+    // }
 
     if (wasSigint) {
         state.lastResult = 2;

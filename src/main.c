@@ -18,7 +18,14 @@
 
 #include "./input/input.h"
 
-// #TODO: Make errors good
+ /**
+  * TODO:
+  * Interpret ".ash" files as specifically ash scripts
+  * Make errors good
+  * Add tab & right suggestion
+  * Add operators (&, &&, |, >, etc)
+  * Add more builtins (eg. disown)
+  */
 
 int main(int argc, char** argv) {
     FILE* fptr = handleInputFilename(argc, argv);

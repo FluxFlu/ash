@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdio.h>
-#include <dirent.h> 
+#include <dirent.h>
+
+
 
 Token* tokenize(String fileString) {
     char* file = fileString.data;
@@ -14,7 +16,13 @@ Token* tokenize(String fileString) {
     size_t tokenArraySize = tokenSize * 64;
 
     for (size_t i = 0; i < fileString.length; i++) {
-        if (file[i] == '"' || file[i] == '\'') {
+        if (file[i] == '\\' && file[i + 1] == '\n') {
+            i++;
+        } else if (file[i] == '#') {
+            while (file[i] != '\n' && i < fileString.length) {
+                i++;
+            }
+        } else if (file[i] == '"' || file[i] == '\'') {
             char toEnd = file[i];
 
             size_t j = 0;
@@ -84,6 +92,7 @@ Token* tokenize(String fileString) {
                     }
 
                     int n = 0;
+
                     while (n < len) {
                         if (n <= 5) {
                             str[s + n] = "/home/"[n];
@@ -95,6 +104,8 @@ Token* tokenize(String fileString) {
                     s += len;
                     f++;
                     continue;
+                } else if (file[i + f] == '#' || file[i + f] == '\\') {
+                    break;
                 }
                 str[s] = file[i + f];
                 s++;
