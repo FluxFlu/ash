@@ -15,10 +15,6 @@ void enableSigint() {
 
     // Empty the sa_mask.
     sigemptyset(&new_action.sa_mask);
-    
-    // Block the SEGTERM signal.
-    // This means while the handler is running, we ignore SIGTERM
-    // sigaddset(&new_action.sa_mask, SIGTERM);
 
     // Remove every flag from the new_action struct.
     new_action.sa_flags = 0;
