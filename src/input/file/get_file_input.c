@@ -12,7 +12,7 @@ String getFileInput(FILE* file) {
         }
         str[strIndex] = c;
         strIndex++;
-        if (strIndex > length) {
+        if (strIndex == length) {
             length *= 4;
             str = (char*) realloc(str, charSize * length);
         }
