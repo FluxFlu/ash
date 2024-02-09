@@ -84,7 +84,7 @@ void draw(char* str, size_t length) {
 
     if (length > state.pos) {
         char buf[32];
-        snprintf(buf, sizeof(buf), "\x1b[%dD", length - state.pos);
+        snprintf(buf, sizeof(buf), "\x1b[%zuD", length - state.pos);
         printLit(buf);
     }
 
