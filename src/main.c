@@ -21,7 +21,6 @@
  /**
    *  TODO:
    *  Interpret ".ash" files as specifically ash scripts
-   *  Quit ash with ctrl+d
    *  Make errors good
    *  Make history not suck
    *  Add tab & right suggestion
