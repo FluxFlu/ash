@@ -6,8 +6,8 @@
 
 #include <limits.h>
 #ifndef HOST_NAME_MAX
-    #define HOST_NAME_MAX 4096
+    #define HOST_NAME_MAX 512
 #endif
 #ifndef LOGIN_NAME_MAX
-    #define LOGIN_NAME_MAX 4096
+    #define LOGIN_NAME_MAX 512
 #endif
