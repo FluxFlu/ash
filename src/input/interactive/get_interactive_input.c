@@ -31,7 +31,14 @@ String getInteractiveInput() {
         }
         if (iscntrl(c)) {
             char ctrl;
-            if (c == 127) {
+            if (c == 4) {
+                if (strTop == 0) {
+                    exit(0);
+                } else if (state.pos != strTop) {
+                    str = delete(&length, &strTop, str);
+                }
+            } else if (c == 127) {
+                // Backspace
                 if (state.pos) {
                     state.pos--;
                     str = delete(&length, &strTop, str);
