@@ -77,7 +77,7 @@ Token* tokenize(String fileString) {
             size_t f = 0;
 
             while (i + f < fileString.length && !isspace(file[i + f])) {
-                if (file[i + f] == '~' && isspace(file[i + f - 1]) && (file[i + f + 1] == '/' || isspace(file[i + f + 1]) || i + f + 1 >= fileString.length)) {
+                if (file[i + f] == '~' && (i + f == 0 || isspace(file[i + f - 1])) && (file[i + f + 1] == '/' || isspace(file[i + f + 1]) || i + f + 1 >= fileString.length)) {
                     if (state.username == NULL) {
                         char* username = (char*) malloc(LOGIN_NAME_MAX);
                         getlogin_r(username, LOGIN_NAME_MAX);
