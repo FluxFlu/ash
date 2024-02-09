@@ -17,13 +17,10 @@ int launch (char* file, char** argv) {
         enableSigint();
         disableRawMode();
 
-        printf("%i", getpid());
-        
         if (execvp(file, argv) == -1) {
             fprintf(stderr, "\rash: Unable to exec [%s]\r\n", file);
             perror("ash");
         }
-        exit(1);
         exit(EXIT_FAILURE);
     } else if (pid < 0) {
         perror("ash: Error forking");
