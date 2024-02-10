@@ -30,11 +30,11 @@ void printSignal(int sig) {
 		case SIGPIPE:
 			printLit("Broken pipe");
 			break;
-		default:
-            char buf[4];
-            snprintf(buf, 4, "%i", sig);
+		default:;
+			char buf[4];
+			snprintf(buf, 4, "%i", sig);
 			printLit("Killed by unhandled signal ");
-            print(buf, 4);
+			print(buf, 4);
 			break;
 	}
 }

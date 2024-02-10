@@ -52,23 +52,13 @@ void exec(Token* tokens) {
         strncpy(glob + 9, command.value, strlen(command.value) + 1);
 
         int err = fileExists(glob, &stats);
-        if (err) {
-            printFileErr(err, command.value);
-            state.lastResult = 127;
-            setLastResult("127", 3);
-            return;
-        } else if (!(stats.st_mode & X_OK)) {
+        if (!err && !(stats.st_mode & X_OK)) {
             fprintf(stderr, "ash: Unknown command. '%s' exists but does not have execute permissions.\n", command.value);
             return;
         }
     } else {
         int err = fileExists(command.value, &stats);
-        if (err) {
-            printFileErr(err, command.value);
-            state.lastResult = 127;
-            setLastResult("127", 3);
-            return;
-        } else if (!(stats.st_mode & X_OK)) {
+        if (!err && !(stats.st_mode & X_OK)) {
             fprintf(stderr, "ash: Unknown command. '%s' exists but does not have execute permissions.\n", command.value);
             return;
         }
